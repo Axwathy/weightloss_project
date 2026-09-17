@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weight History</title>
+</head>
+<body>
+
+<h2>Weight History</h2>
+
+<form method="GET">
+
+    Start Date
+
+    <input type="date" name="start">
+
+    End Date
+
+    <input type="date" name="end">
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
+
+<br>
+
+<table border="1">
+
+<tr>
+    <th>Date</th>
+    <th>Weight</th>
+    <th>Actions</th>
+</tr>
+
+{% for weight in page_obj %}
+
+<tr>
+    <td>{{ weight.date }}</td>
+    <td>{{ weight.weight }} kg</td>
+
+    <td>
+
+        <a href="{% url 'edit_weight' weight.id %}">
+            Edit
+        </a>
+
+        |
+
+        <a href="{% url 'delete_weight' weight.id %}">
+            Delete
+        </a>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+<br>
+
+<div>
+
+    {% if page_obj.has_previous %}
+
+        <a href="?page=1">First</a>
+
+        <a href="?page={{ page_obj.previous_page_number }}">
+            Previous
+        </a>
+
+    {% endif %}
+
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+    {% if page_obj.has_next %}
+
+        <a href="?page={{ page_obj.next_page_number }}">
+            Next
+        </a>
+
+        <a href="?page={{ page_obj.paginator.num_pages }}">
+            Last
+        </a>
+
+    {% endif %}
+
+</div>
+
+<br>
+
+<a href="{% url 'home' %}">
+    Home
+</a>
+
+</body>
+</html>

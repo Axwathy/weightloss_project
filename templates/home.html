@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+
+<h1>Welcome to Weight Loss Management System</h1>
+
+<h3>Hello {{ request.user.username }}</h3>
+
+<a href="{% url 'add_weight' %}">Add Weight</a>
+
+<br><br>
+
+<a href="{% url 'view_weight' %}">View Weight History</a>
+
+<br><br>
+
+<a href="{% url 'logout' %}">Logout</a>
+
+
+</body>
+</html>
