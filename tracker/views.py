@@ -87,8 +87,16 @@ def view_weight(request):
     start = request.GET.get("start")
     end = request.GET.get("end")
 
+    weight_loss = None                                          
+
     if start and end:
         weights = weights.filter(date__range=[start, end])
+
+        first_record = weights.order_by("date").first()         
+        last_record = weights.order_by("-date").first()         
+
+        if first_record and last_record:                        
+            weight_loss = first_record.weight - last_record.weight   
 
     # Latest records first
     weights = weights.order_by("-date")
@@ -99,7 +107,8 @@ def view_weight(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, "view_weight.html", {
-        "page_obj": page_obj
+        "page_obj": page_obj,
+        "weight_loss": weight_loss,                         
     })
 
 
